@@ -1,0 +1,8 @@
+[Unit]
+Description=Newsfeed — hourly news digest check
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /opt/newsfeed/runner.py
