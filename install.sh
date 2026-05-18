@@ -35,6 +35,9 @@ exec python3 /opt/newsfeed/newsfeed.py "$@"
 EOF
 sudo chmod +x /usr/local/bin/newsfeed
 
+echo "Creating config directory..."
+mkdir -p "$HOME/.config/${APP_NAME}"
+
 echo "Installing systemd user timer..."
 mkdir -p "${SYSTEMD_USER_DIR}"
 cp "${INSTALL_DIR}/newsfeed.service" "${SYSTEMD_USER_DIR}/newsfeed.service"
