@@ -42,6 +42,7 @@ echo "Installing systemd user timer..."
 mkdir -p "${SYSTEMD_USER_DIR}"
 cp "${INSTALL_DIR}/newsfeed.service" "${SYSTEMD_USER_DIR}/newsfeed.service"
 cp "${INSTALL_DIR}/newsfeed.timer" "${SYSTEMD_USER_DIR}/newsfeed.timer"
+export XDG_RUNTIME_DIR="/run/user/$(id -u)"
 systemctl --user daemon-reload
 systemctl --user enable newsfeed.timer
 systemctl --user start newsfeed.timer
