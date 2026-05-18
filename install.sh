@@ -42,10 +42,15 @@ echo "Installing systemd user timer..."
 mkdir -p "${SYSTEMD_USER_DIR}"
 cp "${INSTALL_DIR}/newsfeed.service" "${SYSTEMD_USER_DIR}/newsfeed.service"
 cp "${INSTALL_DIR}/newsfeed.timer" "${SYSTEMD_USER_DIR}/newsfeed.timer"
+sudo loginctl enable-linger "$(whoami)"
 export XDG_RUNTIME_DIR="/run/user/$(id -u)"
-systemctl --user daemon-reload
-systemctl --user enable newsfeed.timer
-systemctl --user start newsfeed.timer
+export DBUS_SESSION_BUS_ADDRESS="unix:path=${XDG_RUNTIME_DIR}/bus"
+if systemctl --user daemon-reload 2>/dev/null; then
+    systemctl --user enable newsfeed.timer
+    systemctl --user start newsfeed.timer
+else
+    echo "Note: Timer files installed. Run 'systemctl --user enable --now newsfeed.timer' after logging in."
+fi
 
 echo ""
 echo "=== Installation complete! ==="
