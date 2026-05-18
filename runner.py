@@ -6,10 +6,12 @@ import logging
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from config import Config, LOG_FILE
+from config import Config, LOG_FILE, CONFIG_DIR
 from feed_client import fetch_all_feeds
 from summarizer import summarize_feeds
 from telegram_client import send_message, TelegramError
+
+os.makedirs(CONFIG_DIR, exist_ok=True)
 
 logging.basicConfig(
     filename=LOG_FILE,
