@@ -5,4 +5,4 @@ Wants=network-online.target
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/python3 /opt/newsfeed/runner.py
+ExecStart=/opt/newsfeed/venv/bin/python3 /opt/newsfeed/runner.py

@@ -9,15 +9,17 @@ SYSTEMD_USER_DIR="$HOME/.config/systemd/user"
 echo "=== Installing ${APP_NAME} ==="
 
 sudo apt-get update -qq
-sudo apt-get install -y python3-gi python3-gi-cairo gir1.2-gtk-3.0 python3-requests
-
-sudo pip3 install --break-system-packages feedparser
+sudo apt-get install -y python3-gi python3-gi-cairo gir1.2-gtk-3.0 python3-requests python3-venv
 
 echo "Copying application files..."
 sudo mkdir -p "${INSTALL_DIR}"
 sudo cp -r "$(dirname "$0")"/* "${INSTALL_DIR}/"
 sudo chmod +x "${INSTALL_DIR}/newsfeed.py"
 sudo chmod +x "${INSTALL_DIR}/runner.py"
+
+echo "Creating virtual environment..."
+sudo python3 -m venv --system-site-packages "${INSTALL_DIR}/venv"
+sudo "${INSTALL_DIR}/venv/bin/pip" install --quiet feedparser
 
 echo "Installing icon..."
 sudo mkdir -p /usr/share/icons/hicolor/scalable/apps
@@ -31,7 +33,7 @@ sudo update-desktop-database "${DESKTOP_DIR}" 2>/dev/null || true
 echo "Creating launcher..."
 sudo tee /usr/local/bin/newsfeed > /dev/null << 'EOF'
 #!/bin/bash
-exec python3 /opt/newsfeed/newsfeed.py "$@"
+exec /opt/newsfeed/venv/bin/python3 /opt/newsfeed/newsfeed.py "$@"
 EOF
 sudo chmod +x /usr/local/bin/newsfeed
 
