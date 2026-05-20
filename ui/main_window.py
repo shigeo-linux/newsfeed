@@ -14,6 +14,7 @@ from telegram_client import send_message, test_connection, TelegramError
 STYLE_PATH = os.path.join(os.path.dirname(__file__), 'style.css')
 
 MODELS = [
+    'openrouter/auto',
     'anthropic/claude-3.5-sonnet',
     'anthropic/claude-3-opus',
     'openai/gpt-4o',

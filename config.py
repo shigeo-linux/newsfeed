@@ -13,7 +13,7 @@ DEFAULT_FEEDS = [
 
 DEFAULTS = {
     'api_key': '',
-    'model': 'anthropic/claude-3.5-sonnet',
+    'model': 'openrouter/auto',
     'base_url': 'https://openrouter.ai/api/v1',
     'telegram_token': '',
     'telegram_chat_id': '',
